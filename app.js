@@ -7,6 +7,7 @@ const path = require('path')
 const chalk = require('chalk')
 const passport = require('passport')
 const flash = require('connect-flash')
+const cors = require('cors')
 
 // ----- DATABASE CONFIGURATION -----
 require('./configs/db.config')
@@ -23,6 +24,12 @@ app.use(bodyParser.urlencoded({extended:false}))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(flash())
+
+// --- CORS MIDDLEWARE ---
+app.use(cors({
+    credentials: true,
+    origin: ['http://localhost:3000']
+}))
 
 // ------------ SESSION CONFIGURATION ---
 app.use(session ({
