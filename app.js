@@ -50,6 +50,8 @@ const index = require('./routes/index.routes')
 app.use('/', index)
 const auth = require('./routes/auth.routes')
 app.use('/auth', auth)
+const doubt = require('./routes/doubt.routes')
+app.use('/doubt', doubt)
 
 
 // ----- ERROR ROUTES ----
