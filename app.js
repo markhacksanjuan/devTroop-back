@@ -28,7 +28,7 @@ app.use(flash())
 // --- CORS MIDDLEWARE ---
 app.use(cors({
     credentials: true,
-    origin: ['http://localhost:3000']
+    origin: ['http://localhost:3000', '192.168.1.59:3000']
 }))
 
 // ------------ SESSION CONFIGURATION ---
