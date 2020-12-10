@@ -21,6 +21,7 @@ passport.use(new LocalStrategy({
     passReqToCallback: true
 },(req, username,password, next) => {
     User.findOne({ email: username })
+        .populate()
         .then(user => {
             if(user){
                 bcrypt.compare(password, user.password)

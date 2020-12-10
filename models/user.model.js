@@ -31,7 +31,15 @@ const userSchema = new Schema (
             default: false
         },
         passwordResetToken: String,
-        passwordResetExpires: Date
+        passwordResetExpires: Date,
+        friends: {
+            type: [Schema.Types.ObjectId],
+            ref: 'User'
+        },
+        askedFriendship: {
+            type: [Schema.Types.ObjectId],
+            ref: 'User'
+        }
     },
     {
         timestamps: true

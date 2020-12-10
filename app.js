@@ -29,6 +29,7 @@ app.use(flash())
 app.use(cors({
     credentials: true,
     origin: ['https://devtroop.netlify.app']
+    // origin: ['http://localhost:3001']
 }))
 
 // ------------ SESSION CONFIGURATION ---
@@ -54,6 +55,8 @@ const doubt = require('./routes/doubt.routes')
 app.use('/doubt', doubt)
 const message = require('./routes/messages.routes')
 app.use('/message', message)
+const user = require('./routes/user.routes')
+app.use('/user', user)
 
 
 // ----- ERROR ROUTES ----
