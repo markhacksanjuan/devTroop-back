@@ -52,6 +52,8 @@ const auth = require('./routes/auth.routes')
 app.use('/auth', auth)
 const doubt = require('./routes/doubt.routes')
 app.use('/doubt', doubt)
+const message = require('./routes/messages.routes')
+app.use('/message', message)
 
 
 // ----- ERROR ROUTES ----

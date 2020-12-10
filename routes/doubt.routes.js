@@ -68,23 +68,61 @@ router.post('/one/:id/delete', (req, res, next) => {
 })
 
 // --- ROUTES FOR ANSWERS
-router.get('/answers/all', (req, res, next) => {
+router.get('/answer/all/:doubtId', (req, res, next) => {
+    const doubtId = req.params.doubtId
+    Answer.find({doubtId: doubtId})
+        .then(answers => {
+            res.status(200).json(answers)
+        })
+        .catch(err => {
+            console.error(err)
+            res.json(err)
+        })
+})
+router.post('/answer/create/:doubtId', (req, res, next) => {
+    const user = req.user
+    const doubtId = req.params.doubtId
+    const answer = req.body.answer
+    const newAnswer = {
+        userId: user._id,
+        doubtId,
+        answer
+    }
+    Answer.create(newAnswer)
+        .then(createdAnswer => {
+            Doubt.findOneAndUpdate({ _id: doubtId }, {$push: {answersId: createdAnswer._id}})
+            res.status(200).json(createdAnswer)
+        })
+        .catch(err => {
+            console.error(err)
+            res.json(err)
+        })
+})
+router.post('/answer/edit/:id', (req, res, next) => {
+    const user = req.user
+    const id = req.params.id
+    const answer = req.body.answer
+    Answer.findOneAndUpdate({_id: id}, {answer})
+        .then(editedAnswer => {
+            res.status(200).json(editedAnswer)
+        })
+        .catch(err => {
+            console.error(err)
+            res.json(err)
+        })
+})
+router.post('/answer/delete/:id', (req, res, next) => {
+    const user = req.user
+    const id = req.params.id
+    Answer.findOneAndRemove({_id: id})
+        .then(deletedAnswer => {
+            res.status(200).json(deletedAnswer)
+        })
+        .catch(err => {
+            console.error(err)
+            res.json(err)
+        })
+})
 
-})
-router.get('/answers/one/:id', (req, res, next) => {
-
-})
-router.post('/answers/create', (req, res, next) => {
-
-})
-router.post('/answers/one/:id', (req, res, next) => {
-
-})
-router.post('/answers/one/:id/delete', (req, res, next) => {
-
-})
-router.get('/answers/all/:doubtId', (req, res, next) => {
-    
-})
 
 module.exports = router

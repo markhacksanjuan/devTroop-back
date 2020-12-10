@@ -14,6 +14,10 @@ const doubtSchema = new Schema (
             required: true,
             ref: 'User'
         },
+        answersId: {
+            type: [Schema.Types.ObjectId],
+            ref: 'Answer'
+        }
     },
     {
         timestamps: true
