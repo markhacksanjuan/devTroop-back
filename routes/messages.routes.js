@@ -4,11 +4,11 @@ const Message = require('../models/message.model')
 
 // ----- ROUTES FOR MESSAGE -------
 router.post('/:toUserId/create', (req, res, next) => {
-    const user = req.user
+    // const user = req.user
     const toUserId = req.params.toUserId
-    const message = req.body
+    const { message, fromUserId } = req.body
     const newMessage = {
-        fromUserId: user._id,
+        fromUserId,
         toUserId,
         message
     }
@@ -21,10 +21,11 @@ router.post('/:toUserId/create', (req, res, next) => {
             res.json(err)
         })
 })
-router.get('/:toUserId', (req, res, next) => {
+router.post('/:toUserId', (req, res, next) => {
     const user = req.user
-    const toUserId = req.params.toUserId
-    Message.find.and([{toUserId},{fromUserId: user._id}])
+    const { toUserId } = req.params
+    const { fromUserId } = req.body
+    Message.find({$and: [{toUserId},{fromUserId}]})
         .then(messages => {
             res.status(200).json(messages)
         })

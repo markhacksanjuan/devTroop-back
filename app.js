@@ -26,9 +26,12 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(flash())
 
 // --- CORS MIDDLEWARE ---
+// app.use((req, res, next) => {
+//     res.header('Acces-Control-Allow-Origin', '*')
+// })
 app.use(cors({
     credentials: true,
-    origin: ['https://devtroop.netlify.app']
+    origin: ['https://devtroop.netlify.app'],
     // origin: ['http://localhost:3001']
 }))
 
