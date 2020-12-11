@@ -7,15 +7,18 @@ const User = require('../models/user.model')
 // ----------- ROUTES FOR DOUBTS ------------
 router.post('/create', (req, res, next) => {
     const user = req.user
-    const { title, doubt } = req.body
+    const { title, doubt, userId } = req.body
     const newDoubt = {
-        userId: user._id,
+        userId,
         title,
         doubt
     }
     Doubt.create(newDoubt)
         .then(createdDoubt => {
-            res.status(200).json(createdDoubt)
+            User.findOneAndUpdate({_id: userId}, {$push: {doubts: createdDoubt._id}})
+            .then(result => {
+                res.status(200).json(createdDoubt)
+            })
         })
         .catch(err => {
             console.error(err)
@@ -24,6 +27,17 @@ router.post('/create', (req, res, next) => {
 })
 router.get('/all', (req, res, next) => {
     Doubt.find({})
+        .then(doubts => {
+            res.status(200).json(doubts)
+        })
+        .catch(err => {
+            console.error(err)
+            res.json(err)
+        })
+})
+router.get('/all/:id', (req, res, next) => {
+    const { id } = req.params
+    Doubt.find({userId: id})
         .then(doubts => {
             res.status(200).json(doubts)
         })

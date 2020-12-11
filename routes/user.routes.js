@@ -28,6 +28,21 @@ router.post('/all', (req, res, next) => {
         })
         .catch(err => console.error(err))
 })
+router.post('/getOne', (req, res, next) => {
+    const { userID } = req.body
+    User.findById({_id: userID})
+        .populate('friends', 'doubts')
+        .then(foundUser => {
+            res.status(200).json(foundUser)
+        })
+})
+router.get('/allUsers', (req, res, next) => {
+    User.find({})
+        .then(users => {
+            res.status(200).json(users)
+        })
+        .catch(err => console.error(err))
+})
 
 
 

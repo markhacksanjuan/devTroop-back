@@ -39,6 +39,10 @@ const userSchema = new Schema (
         askedFriendship: {
             type: [Schema.Types.ObjectId],
             ref: 'User'
+        },
+        doubts: {
+            type: [Schema.Types.ObjectId],
+            ref: 'Doubt'
         }
     },
     {
