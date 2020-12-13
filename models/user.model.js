@@ -20,11 +20,11 @@ const userSchema = new Schema (
         },
         imgName: {
             type: String,
-            default: ''
+            default: 'user0'
         },
         imgPath: {
             type: String,
-            default: ''
+            default: 'https://res.cloudinary.com/dbmvibcpr/image/upload/v1607729996/devtroop/user0.png'
         },
         isVerified: {
             type: Boolean,
