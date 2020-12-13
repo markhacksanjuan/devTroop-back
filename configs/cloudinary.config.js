@@ -12,7 +12,7 @@ const storage = new CloudinaryStorage({
     params: async (req, file) => {
         const name = file.originalname
         return {
-            folder: '',
+            folder: 'devtroop',
             format: 'jpg',
             public_id: name
         }

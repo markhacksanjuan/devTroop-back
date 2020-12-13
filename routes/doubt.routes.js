@@ -27,6 +27,7 @@ router.post('/create', (req, res, next) => {
 })
 router.get('/all', (req, res, next) => {
     Doubt.find({})
+        .populate('userId')
         .then(doubts => {
             res.status(200).json(doubts)
         })
@@ -49,6 +50,7 @@ router.get('/all/:id', (req, res, next) => {
 router.get('/one/:id', (req, res, next) => {
     const id = req.params.id
     Doubt.find({_id: id})
+        .populate('userId')
         .then(doubt => {
             res.status(200).json(doubt)
         })
