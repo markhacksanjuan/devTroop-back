@@ -75,6 +75,22 @@ router.post('/editUser', (req, res, next) => {
         })
 
 })
+router.post('/deleteFriend', (req, res, next) => {
+    const { userId, friendId } = req.body
+    User.findById({_id: userId})
+        .then(user => {
+            const newFriendsArr = user.friends.filter(friend => {
+                return friend.toString() !== friendId.toString()
+            })
+            User.findOneAndUpdate({_id: userId}, {friends: newFriendsArr})
+                .then(() => {
+                    res.status(200).json(friendId)
+                })
+                .catch(err => {
+                    res.json(err)
+                })
+        })
+})
 
 
 

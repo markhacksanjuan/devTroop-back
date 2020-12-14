@@ -62,9 +62,13 @@ router.get('/one/:id', (req, res, next) => {
 router.post('/one/:id', (req, res, next) => {
     const id = req.params.id
     const { title, doubt } = req.body
-    Doubt.findOneAndUpdate({_id: id}, {title, doubt})
-        .then(updatedDoubt => {
-            res.status(200).json(updatedDoubt)
+    const newDoubt = {
+        title,
+        doubt
+    }
+    Doubt.findOneAndUpdate({_id: id}, newDoubt)
+        .then(() => {
+            res.status(200).json(newDoubt)
         })
         .catch(err => {
             console.error(err)
@@ -96,11 +100,10 @@ router.get('/answer/all/:doubtId', (req, res, next) => {
         })
 })
 router.post('/answer/create/:doubtId', (req, res, next) => {
-    const user = req.user
-    const doubtId = req.params.doubtId
-    const answer = req.body.answer
+    const { doubtId } = req.params
+    const { answer, userId} = req.body
     const newAnswer = {
-        userId: user._id,
+        userId,
         doubtId,
         answer
     }
