@@ -60,13 +60,11 @@ router.post('/editAvatar/:userId', uploadCloud.single('avatar'), (req, res, next
         })
 })
 router.post('/editUser', (req, res, next) => {
-    const { name, lastName, userId } = req.body
-    const editedUser = {
-        name,
-        lastName
-    }
+    const { editedUser, userId } = req.body
+    
     User.findOneAndUpdate({_id: userId}, editedUser)
-        .then(() => {
+        .then((response) => {
+
             res.status(200).send(editedUser)
         })
         .catch(err => {

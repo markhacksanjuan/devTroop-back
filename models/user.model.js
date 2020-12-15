@@ -18,6 +18,18 @@ const userSchema = new Schema (
             type: String,
             required: true
         },
+        githubUrl: {
+            type: String
+        },
+        linkedinUrl: {
+            type: String
+        },
+        ironhackCourse: {
+            type: String
+        },
+        city: {
+            type: String
+        },
         imgName: {
             type: String,
             default: 'user0'

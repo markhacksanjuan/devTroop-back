@@ -4,15 +4,15 @@ const User = require('../models/user.model')
 const bcrypt = require('bcrypt')
 
 // --- SERIALIZE & DESERIALIZE USER ---
-passport.serializeUser((user, callback) => {
-    callback(null, user._id)
+passport.serializeUser((user, next) => {
+    next(null, user._id)
 })
-passport.deserializeUser((id, callback) => {
+passport.deserializeUser((id, next) => {
     User.findById(id)
         .then(user => {
-            callback(null, user)
+            next(null, user)
         })
-        .catch(err => callback(err))
+        .catch(err => next(err))
 })
 
 // --- SET STRATEGY ----
@@ -27,13 +27,13 @@ passport.use(new LocalStrategy({
                 bcrypt.compare(password, user.password)
                     .then(response => {
                         if(!response){
-                            next(null, false, {message: 'Incorrect username or password'})
+                            next(null, false, {message: 'Email o contraseña incorrectos'})
                         }else {
                             next(null, user)
                         }
                     })
                 }else {
-                    next(null, false, {message: 'Incorrect username or password'})
+                    next(null, false, {message: 'Email o contraseña incorrectos'})
                 }
             })
             .catch(err => {

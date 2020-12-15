@@ -14,14 +14,15 @@ router.post('/signup', (req, res, next) => {
     let newUser = req.body
 
     if(!email || !password) {
-        res.status(400).json({ message: 'Provide email and password' })
+        // res.status(400).send({ errorMessage: 'Provide email and password' })
+        res.json({ errorMessage: 'Tienes que introducir un email y una contraseña' })
+        return
+    }
+    if(password.length < 6){
+        res.json({ errorMessage: 'Deberías hacer la contraseña un poco más larga (6 minim)'})
         return
     }
 
-    if(password < 4){
-        res.status(400).json({ message: 'Please make your password bigger'})
-        return
-    }
     User.findOne({ email: email })
         .then(user => {
             if(!user){
@@ -58,7 +59,7 @@ router.post('/signup', (req, res, next) => {
                         })
                     })
             }else {
-                res.send({errorMessage: 'El email introducido ya existe'})
+                res.send({ errorMessage: 'El email introducido ya existe'})
             }
         })
         .catch(err => {
@@ -71,16 +72,19 @@ router.get('/login', (req, res, next) => {
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', (err, theUser, failureDetails) => {
         if(err) {
-            res.status(500).json({ message: 'Something went wrong authenticating user' })
+            // res.status(500).send({ message: 'Something went wrong authenticating user' })
+            res.send({ message: 'Something went wrong authenticating user' })
             return
         }
         if(!theUser) {
-            res.status(401).json(failureDetails)
+            // res.status(401).send(failureDetails)
+            res.json(failureDetails)
             return
         }
         req.login(theUser, (err) => {
             if(err) {
-                res.status(500).json({ message: 'Session save went bad' })
+                // res.status(500).send({ message: 'Session save went bad' })
+                res.send({ message: 'Session save went bad' })
                 return
             }
             res.status(200).json(theUser)
