@@ -1,7 +1,9 @@
 const express = require('express')
 const router = express.Router()
 const User = require('../models/user.model')
+const Token = require('../models/token.model')
 const uploadCloud = require('../configs/cloudinary.config')
+const { checkForVerificated } = require('../configs/authentication.config')
 
 //--- ROUTES FOR USER ---
 router.post('/add-new-friend', (req, res, next) => {
@@ -88,6 +90,39 @@ router.post('/deleteFriend', (req, res, next) => {
                     res.json(err)
                 })
         })
+})
+router.get('/confirmation/:email/:token', (req, res, next) => {
+    const { email, token } = req.params
+    Token.findOne({ token })
+        .then(token => {
+            if(!token){
+                res.json({errorMessage: 'Tu usuario aún no ha sido verificado'})
+                return
+            }else {
+                User.findOne({ email })
+                    .then(user => {
+                        if(!user){
+                            res.json({errorMessage: 'usuario no encontrado'})
+                            return
+                        }
+                        if(user.isVerified){
+                            res.json({errorMessage: 'Parece que tu usuario ya ha sido verificado'})
+                            return
+                        }
+                        User.findOneAndUpdate({_id: user._id}, {isVerified: true})
+                            .then(() => {
+                                res.status(200).json({message: 'usuario verificado correctamente'})
+                                // req.login(result, (err) => {
+                                //     if(err) { return next(err) }
+                                //     res.status(200).json({message: 'usuario verificado correctamente'})
+                                // })
+                            })
+                    })
+            }
+            })
+            .catch(err => {
+                res.json(err)
+            })
 })
 
 

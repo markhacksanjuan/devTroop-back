@@ -122,7 +122,7 @@ module.exports = {
                 </tr>
                 <tr>
                     <td>
-                        <a class="block btn-login" href="https://team-to-learn.herokuapp.com/auth/confirmation/${user.email}/${token.token}">Verificar cuenta</a>
+                        <a class="block btn-login" href="https://devtroop.netlify.app/user/confirmation/${user.email}/${token.token}">Verificar cuenta</a>
                     </td>
                 </tr>
             </table>

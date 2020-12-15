@@ -23,6 +23,10 @@ passport.use(new LocalStrategy({
     User.findOne({ email: username })
         .populate(['friends', 'doubts'])
         .then(user => {
+            if(!user.isVerified){
+                next(null, false, {message: 'El usuario no ha sido verificado'})
+                return
+            }
             if(user){
                 bcrypt.compare(password, user.password)
                     .then(response => {

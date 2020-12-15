@@ -8,4 +8,5 @@ const checkForAuthentication = (req, res, next) => {
     }
 }
 
+
 module.exports = { checkForAuthentication }
