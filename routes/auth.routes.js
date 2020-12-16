@@ -92,6 +92,7 @@ router.post('/login', (req, res, next) => {
             res.cookie('3pcookie', 'value', { sameSite: 'none', secure: true})
             res.cookie('3pcookie-legacy', 'value', { secure: true })
             res.status(200).json(theUser)
+            res.end()
         })
     })(req, res, next)
 })
@@ -100,6 +101,12 @@ router.post('/logout', (req, res, next) => {
     res.status(200).json({ message: 'Log out success! '})
 })
 router.get('/loggedin', (req, res, next) => {
+    let cookieVal = null
+    if(req.cookies['3pcookie']){
+        cookieVal = req.cookies['3pcookie']
+    }else if (req.cookies['3pcookie-legacy']){
+        cookieVal = req.cookies['3pcookie-legacy']
+    }
     if(req.isAuthenticated()) {
         res.status(200).json(req.user)
         return

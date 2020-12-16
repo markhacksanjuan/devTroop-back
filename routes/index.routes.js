@@ -11,6 +11,7 @@ router.get('/', (req, res, next) => {
         cookieVal = req.cookies['3pcookie-legacy']
     }
     res.send('INDEX PAGE')
+    res.end()
 })
 
 module.exports = router

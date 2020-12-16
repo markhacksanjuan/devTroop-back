@@ -35,6 +35,12 @@ router.post('/getOne', (req, res, next) => {
     User.findById({_id: userID})
         .populate('friends')
         .then(foundUser => {
+            let cookieVal = null
+    if(req.cookies['3pcookie']){
+        cookieVal = req.cookies['3pcookie']
+    }else if (req.cookies['3pcookie-legacy']){
+        cookieVal = req.cookies['3pcookie-legacy']
+    }
             res.status(200).json(foundUser)
         })
 })
