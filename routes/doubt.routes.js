@@ -28,6 +28,7 @@ router.post('/create', (req, res, next) => {
 router.get('/all', (req, res, next) => {
     Doubt.find({})
         .populate('userId')
+        .sort(createdAt = -1)
         .then(doubts => {
             res.status(200).json(doubts)
         })
