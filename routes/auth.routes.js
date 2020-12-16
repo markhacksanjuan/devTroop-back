@@ -9,6 +9,7 @@ const emails = require('../functions/emails')
 const transporter = require('../configs/nodemailer.config')
 const bcryptSalt = 10
 const functions = require('../functions/functions')
+const cp = require('cookie-parser')
 
 router.post('/signup', (req, res, next) => {
     const { email, password } = req.body
@@ -88,6 +89,8 @@ router.post('/login', (req, res, next) => {
                 res.send({ message: 'Session save went bad' })
                 return
             }
+            res.cookie('3pcookie', 'value', { sameSite: 'none', secure: true})
+            res.cookie('3pcookie-legacy', 'value', { secure: true })
             res.status(200).json(theUser)
         })
     })(req, res, next)
