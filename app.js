@@ -40,7 +40,7 @@ app.use(cookieSession({
 // })
 app.use(cors({
     credentials: true,
-    origin: ["https://devtroop.netlify.app", "http://localhost:3001"],
+    origin: ["https://devtroop.netlify.app", "http://localhost:3000"],
 }))
 
 // ------------ SESSION CONFIGURATION ---
