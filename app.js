@@ -31,8 +31,8 @@ app.use(flash())
 // })
 app.use(cors({
     credentials: true,
-    // origin: ['https://devtroop.netlify.app'],
-    origin: ['http://localhost:3001']
+    origin: ['https://devtroop.netlify.app'],
+    // origin: ['http://localhost:3001']
 }))
 
 // ------------ SESSION CONFIGURATION ---
