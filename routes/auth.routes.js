@@ -24,6 +24,10 @@ router.post('/signup', (req, res, next) => {
         res.json({ errorMessage: 'Deberías hacer la contraseña un poco más larga (6 minim)'})
         return
     }
+    if(!functions.isEmail(email)){
+        res.send({errorMessage: 'Tienes que introducir un e-mail válido'})
+        return
+    }
 
     User.findOne({ email: email })
         .then(user => {
@@ -204,6 +208,10 @@ router.post('/resetPwd/check', (req, res, next) => {
 })
 router.post('/resetPwd/newPwd', (req, res, next) => {
     const { email, newPassword } = req.body
+    if(password.length < 6){
+        res.json({ errorMessage: 'Deberías hacer la contraseña un poco más larga (6 minim)'})
+        return
+    }
     bcrypt.genSalt(bcryptSalt)
         .then(salt => {
             bcrypt.hash(newPassword, salt)

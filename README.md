@@ -1,4 +1,4 @@
-# DevTroop
+# DevTroop - Back-end
 ---
 
 ## Third Project from the Ironhack bootcamp: Create a MERN Full-Stack App.

@@ -13,6 +13,14 @@ router.post('/create', (req, res, next) => {
         title,
         doubt
     }
+    if(title === '' || doubt === ''){
+        res.send({errorMessage: '¡Tienes que introducir un titulo y una duda!'})
+        return
+    }
+    if(!userId){
+        res.send({errorMessage: '¡Ouch, hemos tenido un error con el servidor!'})
+        return
+    }
     Doubt.create(newDoubt)
         .then(createdDoubt => {
             User.findOneAndUpdate({_id: userId}, {$push: {doubts: createdDoubt._id}})
@@ -28,7 +36,7 @@ router.post('/create', (req, res, next) => {
 router.get('/all', (req, res, next) => {
     Doubt.find({})
         .populate('userId')
-        .sort(createdAt = -1)
+        .sort({createdAt: -1})
         .then(doubts => {
             res.status(200).json(doubts)
         })
@@ -66,6 +74,10 @@ router.post('/one/:id', (req, res, next) => {
     const newDoubt = {
         title,
         doubt
+    }
+    if(title === '' || doubt === ''){
+        res.send({errorMessage: '¡Tienes que introducir una respuesta!'})
+        return
     }
     Doubt.findOneAndUpdate({_id: id}, newDoubt)
         .then(() => {
@@ -107,6 +119,14 @@ router.post('/answer/create/:doubtId', (req, res, next) => {
         userId,
         doubtId,
         answer
+    }
+    if(answer === ''){
+        res.send({errorMessage: '¡Tienes que introducir una respuesta!'})
+        return
+    }
+    if(!userId){
+        res.send({errorMessage: '¡Ouch, hemos tenido un error con el servidor!'})
+        return
     }
     Answer.create(newAnswer)
         .then(createdAnswer => {
