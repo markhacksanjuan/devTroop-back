@@ -38,7 +38,10 @@ app.use(cors({
 app.use(session ({
     secret: `${process.env.DATABASE}`,
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: {
+        sameSite: 'none'
+    }
 }))
 
 // ----- PASSPORT CONFIGURATION ---
