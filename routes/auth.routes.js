@@ -92,8 +92,9 @@ router.post('/login', (req, res, next) => {
             // res.cookie('sameSite', 'none', {secure: true})
             // res.cookie('3pcookie', 'value', { sameSite: 'none', secure: true})
             // res.cookie('3pcookie-legacy', 'value', { secure: true })
-            res.cookie('foo', 'bar', {
-                sameSite: true
+            res.cookie('sameSite', 'none', {
+                sameSite: true,
+                secure: true
             })
             res.status(200).json(theUser)
             res.end()

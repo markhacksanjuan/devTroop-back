@@ -8,6 +8,7 @@ const chalk = require('chalk')
 const passport = require('passport')
 const flash = require('connect-flash')
 const cors = require('cors')
+const cookieSession = require('cookie-session')
 
 // ----- DATABASE CONFIGURATION -----
 require('./configs/db.config')
@@ -24,6 +25,14 @@ app.use(bodyParser.urlencoded({extended:false}))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(flash())
+app.set('trust proxy', 1)
+app.use(cookieSession({
+    name:'session',
+    keys: ['key1', 'key2'],
+    sameSite: 'none',
+    secure: true
+}))
+
 
 // --- CORS MIDDLEWARE ---
 // app.use((req, res, next) => {
