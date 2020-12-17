@@ -48,6 +48,7 @@ router.get('/all', (req, res, next) => {
 router.get('/all/:id', (req, res, next) => {
     const { id } = req.params
     Doubt.find({userId: id})
+        .populate('userId')
         .then(doubts => {
             res.status(200).json(doubts)
         })

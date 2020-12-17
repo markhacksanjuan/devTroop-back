@@ -34,16 +34,14 @@ app.use(cookieSession({
 }))
 
 
-// --- CORS MIDDLEWARE ---
-// app.use((req, res, next) => {
-//     res.header('Acces-Control-Allow-Origin', '*')
-// })
+// ----------------------- CORS MIDDLEWARE --------------------
+
 app.use(cors({
     credentials: true,
     origin: ["https://devtroop.netlify.app", "http://localhost:3000", "http://localhost:3001"],
 }))
 
-// ------------ SESSION CONFIGURATION ---
+// ------------------- SESSION CONFIGURATION -----------------------
 app.use(session ({
     secret: `${process.env.DATABASE}`,
     resave: true,
@@ -54,14 +52,14 @@ app.use(session ({
     }
 }))
 
-// ----- PASSPORT CONFIGURATION ---
+// -------------------------- PASSPORT CONFIGURATION ---------------------------
 require('./configs/passport.config')
 
-// ----------- MIDDLEWARE PASSPORT ---
+// ------------------------------- MIDDLEWARE PASSPORT --------------------------
 app.use(passport.initialize())
 app.use(passport.session())
 
-// ---- ROUTES ---
+// -------------------------------- ROUTES ---------------------------
 const index = require('./routes/index.routes')
 app.use('/', index)
 const auth = require('./routes/auth.routes')
@@ -74,7 +72,7 @@ const user = require('./routes/user.routes')
 app.use('/user', user)
 
 
-// ----- ERROR ROUTES ----
+// ---------------------------------- ERROR ROUTES -------------------------------
 app.use((req, res, next) => {
     res.status(404)
     res.send('not-found')
@@ -86,7 +84,7 @@ app.use((err, req, res, next) => {
     }
 })
 
-// --- LISTEN ---
+// ------------------------------ LISTEN --------------------------
 app.listen(PORT, () => {
     console.log(chalk.blue.inverse.bold('conectado'))
 })

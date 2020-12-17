@@ -16,7 +16,6 @@ router.post('/signup', (req, res, next) => {
     let newUser = req.body
 
     if(!email || !password) {
-        // res.status(400).send({ errorMessage: 'Provide email and password' })
         res.json({ errorMessage: 'Tienes que introducir un email y una contraseña' })
         return
     }
@@ -78,24 +77,19 @@ router.get('/login', (req, res, next) => {
 router.post('/login', (req, res, next) => {
     passport.authenticate('local', (err, theUser, failureDetails) => {
         if(err) {
-            // res.status(500).send({ message: 'Something went wrong authenticating user' })
             res.status(500).send({ message: 'Something went wrong authenticating user' })
             return
         }
         if(!theUser) {
-            // res.status(401).send(failureDetails)
             res.send(failureDetails)
             return
         }
         req.login(theUser, (err) => {
             if(err) {
-                // res.status(500).send({ message: 'Session save went bad' })
                 res.send({ message: 'Session save went bad' })
                 return
             }
-            // res.cookie('sameSite', 'none', {secure: true})
-            // res.cookie('3pcookie', 'value', { sameSite: 'none', secure: true})
-            // res.cookie('3pcookie-legacy', 'value', { secure: true })
+
             res.cookie('sameSite', 'none', {
                 sameSite: true,
                 secure: true
