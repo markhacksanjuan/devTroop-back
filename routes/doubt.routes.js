@@ -22,6 +22,7 @@ router.post('/create', (req, res, next) => {
         return
     }
     Doubt.create(newDoubt)
+        .populate('userId')
         .then(createdDoubt => {
             User.findOneAndUpdate({_id: userId}, {$push: {doubts: createdDoubt._id}})
             .then(result => {
