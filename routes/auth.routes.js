@@ -12,7 +12,7 @@ const functions = require('../functions/functions')
 const cp = require('cookie-parser')
 
 router.post('/signup', (req, res, next) => {
-    const { email, password } = req.body
+    const { email, password, email2 } = req.body
     let newUser = req.body
 
     if(!email || !password) {
@@ -20,12 +20,15 @@ router.post('/signup', (req, res, next) => {
         return
     }
     if(password.length < 6){
-        res.json({ errorMessage: 'Deberías hacer la contraseña un poco más larga (6 minim)'})
+        res.json({ errorMessage: 'Deberías hacer la contraseña un poco más larga (6 minimo)'})
         return
     }
     if(!functions.isEmail(email)){
         res.send({errorMessage: 'Tienes que introducir un e-mail válido'})
         return
+    }
+    if(email !== email2){
+        res.send({errorMessage: 'Los e-mails introducidos no son iguales'})
     }
 
     User.findOne({ email: email })

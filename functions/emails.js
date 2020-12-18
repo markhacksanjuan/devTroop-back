@@ -181,7 +181,7 @@ module.exports = {
                 </tr>
                 <tr>
                     <td>
-                        <a class="block btn-login" href="http://localhost:3001/resetPwdTokenForm/${user.email}/${token}">Obtener nueva contraseña</a>
+                        <a class="block btn-login" href="https://devtroop.netlify.app/resetPwdTokenForm/${user.email}/${token}">Obtener nueva contraseña</a>
                     </td>
                 </tr>
             </table>
