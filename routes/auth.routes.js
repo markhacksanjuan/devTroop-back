@@ -29,6 +29,7 @@ router.post('/signup', (req, res, next) => {
     }
     if(email !== email2){
         res.send({errorMessage: 'Los e-mails introducidos no son iguales'})
+        return
     }
 
     User.findOne({ email: email })
